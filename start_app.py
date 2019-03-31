@@ -2,7 +2,8 @@ import sys
 import socket
 import getopt
 import pickle
-import Client
+from client import client as new_user
+
 login = ""
 password = ""
 _host = "127.0.0.1"
@@ -21,10 +22,10 @@ def send_message(user, message):
 
 
 def sign_in(login, pw):
-	'''sign_in user'''
+	'''sign in user'''
 
 	global MESSAGE
-	user = us.Client(login,pw)
+	user = new_user.Client(login,pw)
 	MESSAGE = 'sign_in'
 	return (user, MESSAGE)
 
@@ -37,6 +38,7 @@ def execute(opts, args):
 
 	for flag, description in opts:
 		if flag in ("-l", "--login"):
+			print('login')
 			login, password = args
 			user, message = sign_in(login, password)
 			send_message(user, message)

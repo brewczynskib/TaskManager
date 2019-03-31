@@ -1,0 +1,23 @@
+import sys
+import socket
+import getopt
+
+login = ""
+password = ""
+_host = 127.0.0.1
+_port = 80
+
+def main():
+
+	try:
+		client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	client.connect((_host, _port))
+
+	try:
+		opts, args = getopt.getopt(sys.argv[1:],"l:c:t",
+				  ["login","create","tasks"])
+	except:
+	print('opsi error')
+	manual()
+
+

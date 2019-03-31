@@ -1,7 +1,7 @@
 import socket
 import threading
 import pickle
-import client
+
 
 _ip = "127.0.0.1"
 _port = 5000
