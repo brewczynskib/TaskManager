@@ -5,7 +5,10 @@ class Client:
 
 	def __init__(self, login, password):
 		self._login = login
-		self._paswword = password
+		self._password = password
 
-def fun():
-	print('oh yeah')
+	def get_login(self):
+		return self._login
+
+	def get_password(self):
+		return self._password

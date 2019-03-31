@@ -26,6 +26,7 @@ def sign_in(login, pw):
 
 	global MESSAGE
 	user = new_user.Client(login,pw)
+	print('user password', user.get_password())
 	MESSAGE = 'sign_in'
 	return (user, MESSAGE)
 
@@ -38,7 +39,6 @@ def execute(opts, args):
 
 	for flag, description in opts:
 		if flag in ("-l", "--login"):
-			print('login')
 			login, password = args
 			user, message = sign_in(login, password)
 			send_message(user, message)
