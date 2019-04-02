@@ -31,6 +31,15 @@ def sign_in(login, pw):
 	return (user, MESSAGE)
 
 
+def create_user(login, password):
+	'''crate new user nad send to server'''
+
+	global MESSAGE
+	user = new_user.Client(login, password)
+	MESSAGE = 'create_user'
+	send_message(user, MESSAGE)
+
+
 def execute(opts, args):
 	'''execute given flags'''
 
@@ -44,7 +53,11 @@ def execute(opts, args):
 			send_message(user, message)
 		elif flag in ("-c", "--create"):
 			print('created')
+			#create_new_user(args[0], args[1])
+			print('type of new user : ', description)
+			print('login', args[0], 'password', args[1])
 		elif flag in ("-t", "--tasks"):
+			check_tasks(description)
 			print('tasks')
 
 
