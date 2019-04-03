@@ -17,10 +17,8 @@ _server.listen(5)
 def handle_user(user_socket):
 	'''hande user request'''
 
-	user, message = user_socket.recvfrom(2048)
-	if(not user): print('uopsi')
-	user = pickle.loads(user)
-	print(user.get_login(), ' ', user.get_password())
+	receive_data = user_socket.recvfrom(2048)
+	#receive file
 	user_socket.close()
 
 while True:
