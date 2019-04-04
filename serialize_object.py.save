@@ -1,0 +1,6 @@
+def convert_to_dict(object):
+	'''convert object to dict, inspired by Rodgers Ouma Mc'Alila'''
+
+	obj_dict = {
+		'__class__' = obj.__class__,
+		'__meta

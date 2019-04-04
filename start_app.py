@@ -2,7 +2,9 @@ import sys
 import socket
 import getopt
 import pickle
+import json
 from client import client as new_user
+from serialize_object import convert_to_dict
 
 login = ""
 password = ""
@@ -11,14 +13,13 @@ _port = 5000
 MESSAGE = ""
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-def send_message(user, message):
+def send_message(data, message):
 	'''send user and message to server'''
-
-	u = pickle.dumps(user)
-	m = pickle.dumps(message)
-
-	print('sth',u, m)
-	client.send(u)
+	d = convert_to_dict(data)
+	json_data = json.dumps([d,message])
+	#m = pickle.dumps(message)
+	data_to_send = pickle.dumps(json_data)
+	client.send(data_to_send)
 
 
 def sign_in(login, pw):
@@ -31,13 +32,14 @@ def sign_in(login, pw):
 	return (user, MESSAGE)
 
 
-def create_user(login, password):
+def create_user(login, password, user_type):
 	'''crate new user nad send to server'''
 
 	global MESSAGE
 	user = new_user.Client(login, password)
 	MESSAGE = 'create_user'
 	send_message(user, MESSAGE)
+	print('user-type', user_type)
 
 
 def execute(opts, args):
@@ -53,9 +55,7 @@ def execute(opts, args):
 			send_message(user, message)
 		elif flag in ("-c", "--create"):
 			print('created')
-			#create_new_user(args[0], args[1])
-			print('type of new user : ', description)
-			print('login', args[0], 'password', args[1])
+			create_user(args[0], args[1], description)
 		elif flag in ("-t", "--tasks"):
 			check_tasks(description)
 			print('tasks')
