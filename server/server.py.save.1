@@ -3,7 +3,6 @@ import threading
 import pickle
 import sys
 import os
-import json
 #sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'client'))
 sys.path.append(os.path.dirname(sys.path[0]))
 from client import client as new_user
@@ -18,12 +17,5 @@ _server.listen(5)
 def handle_user(user_socket):
 	'''hande user request'''
 
-	receive_data = user_socket.recvfrom(2*1024)
-	data = json.loads(receive_data)
-	print(data)
-	user_socket.close()
-
-while True:
-	client, addr = _server.accept()
-	user_handler = threading.Thread(target = handle_user, args = (client,))
-	user_handler.start()
+	receive_data = user_socket.recvfrom(2048)
+	file_conent = receive_data.read()
