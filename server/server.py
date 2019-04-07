@@ -25,8 +25,8 @@ def enter_user(login, password, user_socket):
 	'''check if user is in db if is, user can log-in'''
 
 	if is_user_in_db(login,password):
-		response = b'welcome user'
-		user_socket.send(response)
+		response = new_user.Client(login, password)
+		user_socket.send(pickle.dumps(response))
 		print('data sent to client')
 
 	else: pass

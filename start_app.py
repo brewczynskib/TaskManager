@@ -29,9 +29,11 @@ def handle_user(login, password, flag):
 	send_message(data, message)
 	print('make some action', flag)
 	while True:
-		data = client.recv(1024)
-		if(data):
-			print(data)
+		self = client.recv(1024)
+		self = pickle.loads(self)
+		if(self):
+			self.set_status()
+			print('loged in ', self.get_login() , 'online :', self.get_status)
 			break
 
 
