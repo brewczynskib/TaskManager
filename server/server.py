@@ -7,6 +7,7 @@ import json
 #sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'client'))
 sys.path.append(os.path.dirname(sys.path[0]))
 from client import client as new_user
+from serialize_object import object_to_dict
 
 _ip = "127.0.0.1"
 _port = 5000
@@ -16,11 +17,14 @@ _server.bind((_ip, _port))
 _server.listen(5)
 
 def handle_user(user_socket):
-	'''hande user request'''
+	'''handle user request'''
 
-	receive_data = user_socket.recvfrom(2*1024)
-	data = json.loads(receive_data)
-	print(data)
+	receive_data, addr = user_socket.recvfrom(1024)
+	json_file = pickle.loads(receive_data)
+	d, message = json.loads(json_file)
+	data = new_user.Client(d['login'], d['password'])
+	print('data', ':', data.get_login())
+	print('message: ', message)
 	user_socket.close()
 
 while True:

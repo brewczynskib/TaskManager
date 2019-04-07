@@ -9,3 +9,17 @@ def convert_to_dict(obj):
 	}
 	obj_dict.update(obj.__dict__)
 	return obj_dict
+
+
+def object_to_dict(my_dict):
+	'''convert our dict to object'''
+
+	if "__class__" in my_dict:
+		class_name = my_dict.pop("__class__")
+		module_name = my_dict.pop("__module__")
+		module = __import__(module_name)
+		class_ = getattr(module.client, class_name)
+		obj = class_(**my_dict)
+	else: pass
+
+
