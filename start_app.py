@@ -2,7 +2,6 @@ import sys
 import socket
 import getopt
 import pickle
-import json
 #from client import client as new_user
 #from serialize_object import convert_to_dict
 
@@ -10,36 +9,30 @@ login = ""
 password = ""
 _host = "127.0.0.1"
 _port = 5000
-MESSAGE = ""
+message = ""
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 def send_message(data, message):
 	'''send user and message to server'''
 
-	user_data = {"login": data[0] , "password": data[1]}
-	data_to_send = pickle.dumps(user_data)
-	print(client.send(data_to_send))
+	_data = {"login": data[0] , "password": data[1], "message": message}
+	data_to_send = pickle.dumps(_data)
+	print('bytes sent: ', client.send(data_to_send))
 
 
-def login_user(login, pw):
-	'''sign in user'''
+def handle_user(login, password, flag):
+	'''create or login user'''
 
-	global MESSAGE
-	user = new_user.Client(login,pw)
-	print('user password', user.get_password())
-	MESSAGE = 'sign_in'
-	return (user, MESSAGE)
-
-
-def handle_user(login, password, user_type):
-	'''create or login user to system'''
-
-	global MESSAGE
-	#user = new_user.Client(login, password)
-	data = [login,password]
-	MESSAGE = 'create_user'
-	send_message(data, MESSAGE)
-	print('user-type', user_type)
+	global message
+	message = flag
+	data = [login, password]
+	send_message(data, message)
+	print('make some action', flag)
+	while True:
+		data = client.recv(1024)
+		if(data):
+			print(data)
+			break
 
 
 def execute(opts, args):
@@ -50,6 +43,7 @@ def execute(opts, args):
 
 	for flag, description in opts:
 		if flag in ("-l", "--login"):
+			print('login')
 			handle_user(args[0], args[1],flag)
 
 		elif flag in ("-c", "--create"):
