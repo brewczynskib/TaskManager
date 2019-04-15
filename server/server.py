@@ -20,7 +20,7 @@ _server.listen(5)
 def is_user_in_db(login):
 	'''check if user is in db'''
 
-	
+	return True
 
 def enter_user(login, password, user_socket):
 	'''check if user is in db if is, user can log-in'''
@@ -37,11 +37,13 @@ def create_user(login, password, user_socket):
 	'''create new user'''
 
 	data = (login, password)
+	login = (login,)
 	conn = sqlite3.connect("example.db")
 	c = conn.cursor()
 	c.execute("CREATE TABLE users (login text, password text)")
 
-	if(c.execute("SELECT * FROM users WHERE login = (?)",login):
+	print(login)
+	if(c.execute("SELECT * FROM users WHERE login = ?", login)):
 		c.execute("INSERT INTO users VALUES (?,?)", data)
 		conn.commit()
 		user_socket.send(b'Account created')
