@@ -8,6 +8,10 @@ class Client:
 		self._password = password
 		self._online = False
 
+	def __repr__(self):
+		class_name = type(self).__name__
+		return '{}{!r}'.format(class_name, self._login)
+
 	def get_login(self):
 		return self._login
 
