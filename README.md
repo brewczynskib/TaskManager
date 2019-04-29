@@ -1,5 +1,5 @@
 
-# Tasks-manager
+# task-manager
 Admin send tasks to users. 
 
 ## Things to do
